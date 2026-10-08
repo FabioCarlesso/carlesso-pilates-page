@@ -1,12 +1,14 @@
 # Kit de partida — site de divulgação e vendas da Carlesso Pilates
 
-Material para iniciar o repositório do site público. **Comece por `docs/ANALISE-PROJETO.md`.**
+Material para iniciar o repositório do site público. **Comece por `docs/ANALISE-PROJETO.md`** e depois leia
+`docs/REVISAO-PLANEJAMENTO.md`, que ajusta a ordem das fases e corrige pontos do kit antes da construção.
 
 ```
 .
 ├── README.md
 ├── docs/
-│   └── ANALISE-PROJETO.md        # análise completa, decisões, roadmap e backlog
+│   ├── ANALISE-PROJETO.md        # análise completa, decisões, roadmap e backlog
+│   └── REVISAO-PLANEJAMENTO.md   # revisão do plano: MVP, correções do kit, roadmap e backlog revisados
 ├── assets/
 │   ├── README.md                 # o que cada arquivo é e como usar
 │   ├── brand/                    # símbolo, lockups, padronagem, favicons (SVG)
