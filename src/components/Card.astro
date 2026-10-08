@@ -1,0 +1,26 @@
+---
+/**
+ * Superfície branca com borda sutil, para as seções claras (`claro` e `papel`).
+ * `as` troca a tag: `li` dentro de lista, `article` para itens autônomos.
+ */
+interface Props {
+  as?: 'div' | 'li' | 'article';
+  class?: string;
+}
+
+// `...resto` repassa o atributo de escopo do CSS de quem usa o componente.
+const { as: Tag = 'div', class: classe, ...resto } = Astro.props;
+---
+
+<Tag class:list={['card', classe]} {...resto}>
+  <slot />
+</Tag>
+
+<style>
+  .card {
+    min-width: 0;
+    background-color: var(--bg-elev);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-lg);
+  }
+</style>

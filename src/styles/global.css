@@ -77,6 +77,11 @@ a {
   color: var(--tom-text);
 }
 
+/* Eyebrow seguido do título: o par que abre as seções. */
+.eyebrow + .titulo-secao {
+  margin-top: 14px;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

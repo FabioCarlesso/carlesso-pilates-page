@@ -1,0 +1,25 @@
+# Perguntas frequentes. Sem `resposta`, a pergunta não aparece no site.
+
+como-sao-as-aulas:
+  ordem: 1
+  pergunta: Como são as aulas?
+  resposta: >-
+    Trabalhamos com duas pessoas por horário (dueto) ou, se você preferir, no sistema individualizado
+    (Vip class). As aulas são presenciais.
+
+onde-fica:
+  ordem: 2
+  pergunta: Onde fica o estúdio?
+  resposta: 'Na {endereco}.'
+
+formacao:
+  ordem: 3
+  pergunta: Vocês oferecem formação para profissionais?
+  resposta: >-
+    Sim. O estúdio oferece mentorias, workshops e treinamentos para profissionais, com a Claudia
+    Carlesso.
+
+experiencia:
+  ordem: 4
+  pergunta: Preciso ter experiência com Pilates?
+  # Pendente: resposta a definir com a Claudia.

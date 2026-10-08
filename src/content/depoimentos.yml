@@ -1,0 +1,10 @@
+# Depoimentos de alunos. Só com autorização por escrito; nunca inventar.
+# Enquanto estiver vazio, a seção não aparece na Home (e o build avisa que a
+# coleção "depoimentos" está vazia — é esperado). Formato:
+#
+# nome-do-aluno:
+#   autor: Nome Sobrenome
+#   texto: O que a pessoa disse, como autorizou.
+#   autorizadoEm: 2026-10-08
+
+{}

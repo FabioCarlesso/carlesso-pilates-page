@@ -8,7 +8,7 @@ import { site } from '../config/site';
 <Base titulo={`Página não encontrada — ${site.nome}`} semIndexacao>
   <Secao rotulo="Página não encontrada" estreita>
     <p class="eyebrow">Erro 404</p>
-    <h1 class="titulo-secao nao-encontrada__titulo">Esta página não existe.</h1>
+    <h1 class="titulo-secao">Esta página não existe.</h1>
     <p class="nao-encontrada__texto">O endereço pode ter mudado. Volte ao início ou fale com a gente pelo WhatsApp.</p>
     <div class="nao-encontrada__acoes">
       <Botao href="/" variante="secundario" tamanho="lg">Voltar ao início</Botao>
@@ -18,10 +18,6 @@ import { site } from '../config/site';
 </Base>
 
 <style>
-  .nao-encontrada__titulo {
-    margin-top: 14px;
-  }
-
   .nao-encontrada__texto {
     margin-top: 20px;
     font-size: var(--fs-lead);

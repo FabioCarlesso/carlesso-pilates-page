@@ -2,7 +2,7 @@
 
 > Revisão de `docs/ANALISE-PROJETO.md` e do kit (`assets/`, `reference/`). Data: 08/10/2026.
 > **Atualização (08/10/2026):** decididos Astro, Cloudflare Pages e GA4 com consentimento (registro em
-> `docs/context.md`). Os itens 2 a 5 do backlog (seção 7) estão feitos; os caminhos `assets/…` citados abaixo
+> `docs/context.md`). Os itens 2 a 6 do backlog (seção 7) estão feitos; os caminhos `assets/…` citados abaixo
 > foram reorganizados (ver `docs/README.md`).
 >
 > Mesma convenção da análise: **[fato]** foi conferido nos arquivos do kit; **[recomendação]** é opinião, para discutir;
@@ -245,7 +245,7 @@ Entregar em alta resolução (o build gera AVIF/WebP e os tamanhos).
 3. ~~`src/config/site.ts` + `linkWhatsApp()` + geração do JSON-LD~~ ✓
 4. ~~Adaptar `lint-tokens` (seção 4.10) e criar CI (lint de tokens, `astro check`, build)~~ ✓
 5. ~~Componentes base: `Layout` (topo, rodapé, WhatsApp flutuante, pular para conteúdo), `Section` (claro/escuro/marca), `Button`, `Citacao` (bordas `[ ]`)~~ ✓ — `Card` entra com a Home
-6. Home (MVP) a partir da prévia, com as correções da seção 4.4 e blocos que se escondem sem conteúdo
+6. ~~Home (MVP) a partir da prévia, com as correções da seção 4.4 e blocos que se escondem sem conteúdo~~ ✓ — conteúdo em `src/content/` (ver `docs/context.md`)
 7. `/privacidade` (a 404 já existe) — publicar junto com o GA4
 8. SEO técnico: imagem Open Graph 1200×630 e títulos das novas páginas (canonical, sitemap, `robots.txt`, JSON-LD e favicons PNG já existem)
 9. GA4 com aviso de consentimento + evento `click_whatsapp` por posição (requisitos em `docs/context.md`, D6)

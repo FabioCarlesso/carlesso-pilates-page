@@ -42,8 +42,14 @@ export const site = {
     facebook: 'https://www.facebook.com/claudiacarlessopilates/'
   },
 
-  /** Links do menu principal. Entram conforme as seções da Home forem construídas. */
-  navegacao: [] as { rotulo: string; href: string }[]
+  /** Menu principal: âncoras das seções da Home. Com `/` na frente para funcionar fora dela (404). */
+  navegacao: [
+    { rotulo: 'Método', href: '/#metodo' },
+    { rotulo: 'Aulas', href: '/#aulas' },
+    { rotulo: 'Estúdio', href: '/#estudio' },
+    { rotulo: 'Equipe', href: '/#equipe' },
+    { rotulo: 'Para profissionais', href: '/#profissionais' }
+  ]
 } as const;
 
 /**
@@ -58,6 +64,8 @@ const mensagensWhatsApp = {
 } as const;
 
 export type ContextoWhatsApp = keyof typeof mensagensWhatsApp;
+/** Para validar o contexto nos arquivos de conteúdo (src/content.config.ts). */
+export const contextosWhatsApp = Object.keys(mensagensWhatsApp) as [ContextoWhatsApp, ...ContextoWhatsApp[]];
 
 export function linkWhatsApp(contexto: ContextoWhatsApp = 'geral'): string {
   const texto = `Olá! Vim pelo site. ${mensagensWhatsApp[contexto]}`;
@@ -66,6 +74,17 @@ export function linkWhatsApp(contexto: ContextoWhatsApp = 'geral'): string {
 
 export const linkTelefone = `tel:+${site.telefone.e164}`;
 export const linkEmail = `mailto:${site.email}`;
+
+/** Endereço numa linha só, para texto corrido e busca no mapa. */
+export function enderecoCompleto(): string {
+  const { logradouro, complemento, bairro, cidade, uf, cep } = site.endereco;
+  return `${logradouro}, ${complemento}, ${bairro}, ${cidade}/${uf}, ${cep}`;
+}
+
+/** Busca do endereço no Google Maps. Link em vez de iframe: nada do Google carrega na visita. */
+export const linkMapa = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  `${site.nome}, ${enderecoCompleto()}`
+)}`;
 
 export function enderecoEmLinhas(): string[] {
   const { logradouro, complemento, bairro, cidade, uf, cep } = site.endereco;

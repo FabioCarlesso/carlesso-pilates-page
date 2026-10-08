@@ -2,6 +2,7 @@
 /**
  * Botão-link. Com `whatsapp`, monta o link pela função de site.ts e marca a
  * posição em `data-whatsapp` para o evento `click_whatsapp` do GA4.
+ * WhatsApp e `externo` abrem em nova aba e avisam isso ao leitor de tela.
  */
 import { linkWhatsApp, type ContextoWhatsApp } from '../config/site';
 
@@ -10,23 +11,25 @@ interface Props {
   whatsapp?: { contexto?: ContextoWhatsApp; posicao: string };
   variante?: 'primario' | 'secundario' | 'claro';
   tamanho?: 'md' | 'lg';
+  externo?: boolean;
   class?: string;
 }
 
-const { href, whatsapp, variante = 'primario', tamanho = 'md', class: classe, ...resto } = Astro.props;
+const { href, whatsapp, variante = 'primario', tamanho = 'md', externo = false, class: classe, ...resto } = Astro.props;
 const destino = whatsapp ? linkWhatsApp(whatsapp.contexto) : href;
+const novaAba = Boolean(whatsapp) || externo;
 ---
 
 <a
   href={destino}
   class:list={['botao', `botao--${variante}`, `botao--${tamanho}`, classe]}
   data-whatsapp={whatsapp?.posicao}
-  target={whatsapp ? '_blank' : undefined}
-  rel={whatsapp ? 'noopener' : undefined}
+  target={novaAba ? '_blank' : undefined}
+  rel={novaAba ? 'noopener' : undefined}
   {...resto}
 >
   <slot />
-  {whatsapp && <span class="sr-only"> (abre o WhatsApp em nova aba)</span>}
+  {novaAba && <span class="sr-only"> ({whatsapp ? 'abre o WhatsApp' : 'abre'} em nova aba)</span>}
 </a>
 
 <style>

@@ -1,0 +1,23 @@
+# Formas de praticar. `frequencia` e `valor` ficam de fora até a Claudia definir
+# (e até a consulta ao CREFITO-8 sobre divulgar preços — docs/context.md).
+# Exemplo, quando houver: `valor: R$ 000/mês`.
+
+dueto:
+  ordem: 1
+  nome: Dueto
+  titulo: Duas pessoas por horário
+  descricao: >-
+    Aula presencial em dupla: atenção próxima da instrutora e a companhia de quem divide o horário
+    com você.
+  contexto: dueto
+  cta: Agendar dueto
+
+vip:
+  ordem: 2
+  nome: Vip class
+  titulo: Sistema individualizado
+  descricao: >-
+    Aula individual, com a instrutora inteira para você: o ritmo e o foco do método ajustados ao seu
+    corpo.
+  contexto: vip
+  cta: Agendar Vip class

@@ -52,10 +52,16 @@ import { site } from '../config/site';
     padding: 12px 0;
   }
 
-  /* No celular, o botão flutuante assume o CTA. */
+  /* No celular, o botão flutuante assume o CTA e o menu ocupa uma linha própria,
+     quebrando em mais linhas se precisar (zero JS; docs/context.md). */
   @media (max-width: 767px) {
     .topo__cta {
       display: none;
+    }
+
+    .topo__nav {
+      flex-basis: 100%;
+      gap: 0 20px;
     }
   }
 </style>

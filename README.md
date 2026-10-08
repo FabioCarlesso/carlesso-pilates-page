@@ -25,8 +25,9 @@ npm run verify       # lint de tokens + astro check + build (o mesmo que o CI)
 src/
 ├── config/site.ts     # dados do estúdio, WhatsApp, navegação — fonte única
 ├── lib/schema.ts      # JSON-LD gerado de site.ts
+├── content/           # equipe, planos, FAQ e depoimentos (YAML) — schema em content.config.ts
 ├── styles/            # tokens.css (design system), tokens-site.css, fonts.css, global.css
-├── components/        # Secao, Botao, Citacao, Lockup, Simbolo, Topo, Rodape, WhatsAppFlutuante
+├── components/        # Secao, Card, Botao, Citacao, Lockup, Simbolo, Topo, Rodape, WhatsAppFlutuante
 ├── layouts/Base.astro # <head>, SEO, landmarks, topo e rodapé
 └── pages/             # index, 404
 public/                # favicons, _headers, robots.txt, brand/

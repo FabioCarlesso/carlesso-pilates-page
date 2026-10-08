@@ -1,0 +1,18 @@
+# Equipe, na ordem da página. Textos do site atual (docs/ANALISE-PROJETO.md, apêndice A).
+# Foto: entra quando houver retratos (docs/REVISAO-PLANEJAMENTO.md, seção 5).
+
+claudia-carlesso:
+  ordem: 1
+  nome: Claudia Carlesso
+  papel: Fisioterapeuta · Responsável técnica
+  bio: >-
+    Certificada pelo Strength Pilates Certification Program. Há mais de 10 anos atuando com o método
+    Pilates, oferece mentorias, workshops e treinamentos para profissionais.
+
+camila-fornazero:
+  ordem: 2
+  nome: Camila Fornazero
+  papel: Fisioterapeuta · Instrutora de Pilates
+  bio: >-
+    Bailarina desde os 5 anos de idade e praticante de natação, basquete e musculação. Estuda e
+    aperfeiçoa continuamente o seu conhecimento no método Pilates.

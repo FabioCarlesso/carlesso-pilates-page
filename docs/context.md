@@ -24,7 +24,8 @@ Configuração em `docs/deploy.md`.
 ### D6 — GA4 com aviso de consentimento (08/10/2026)
 
 GA4 com evento `click_whatsapp` por posição. Nenhum script do Google carrega antes do consentimento.
-Os botões de WhatsApp já marcam a posição em `data-whatsapp` (topo, hero, fechamento, flutuante, rodape, 404).
+Os botões de WhatsApp já marcam a posição em `data-whatsapp` (topo, hero, aulas, profissionais, fechamento, flutuante,
+rodape, 404).
 Implementação: item 9 do backlog (`REVISAO-PLANEJAMENTO.md`, seção 7). Ao implementar:
 - banner com "Aceitar" e "Recusar" de mesmo peso visual, sem caixa pré-marcada;
 - escolha guardada no navegador e revogável por link no rodapé;
@@ -42,12 +43,33 @@ e o bloco correspondente não aparece.
 `https://wa.me/<número>?text=…`, montado por `linkWhatsApp(contexto)`. Toda mensagem começa com
 "Olá! Vim pelo site." para a recepção contar os contatos vindos do site.
 
+### Conteúdo em content collections (08/10/2026)
+
+Equipe, planos, FAQ e depoimentos ficam em `src/content/*.yml`, com schema em `src/content.config.ts`
+(D5 da análise: conteúdo no repositório, sem CMS). Cada item tem `ordem`, porque o Astro não preserva a ordem do
+arquivo. Campo opcional vazio esconde o bloco: plano sem `valor` mostra "Consulte valores e horários pelo
+WhatsApp", pergunta sem `resposta` não aparece, coleção de depoimentos vazia esconde a seção. Depoimento sem
+`autorizadoEm` (data da autorização por escrito) não passa no build.
+
+### Home sem foto e sem mapa incorporado (08/10/2026)
+
+Enquanto não houver fotos, o hero mostra a padronagem da marca (escondida no celular) e a equipe, um monograma
+com as iniciais. A localização é um link "Ver no Google Maps" (`linkMapa` em `site.ts`), sem `<iframe>`: nada do
+Google carrega na visita (`REVISAO-PLANEJAMENTO.md`, 4.5).
+
+### Menu no celular (08/10/2026)
+
+Sem menu hambúrguer: abaixo de 768px o menu ocupa uma linha própria sob o logotipo e quebra em linha quando não
+cabe (zero JS, como pede a seção 13 da análise). O botão "Agendar aula" do topo some no celular; o flutuante assume.
+
 ## Em aberto
 
 - [ ] Frase oficial de posicionamento e sublinha do logotipo (`site.sublinha` usa "Pilates Clássico" provisoriamente)
 - [ ] Dream Avenue (licença web) ou Italiana definitiva
 - [ ] Nome do subdomínio do sistema e destino da landing de `/`
 - [ ] Quem controla o domínio no Registro.br e o DNS; quando fazer a troca
-- [ ] Regras de publicidade do COFFITO/CREFITO-8 (preços, depoimentos, registro da responsável técnica)
-- [ ] Valores e frequências dos pacotes
+- [ ] Regras de publicidade do COFFITO/CREFITO-8 (preços, depoimentos, registro da responsável técnica — o campo
+  `crefito` da equipe já aparece quando preenchido) e como comprovar o "1º Studio de Pilates Clássico"
+- [ ] Valores e frequências dos pacotes (`src/content/planos.yml`)
+- [ ] Fotos (hero, estúdio, equipe), texto sobre a Contrologia e resposta "preciso ter experiência?" (`faq.yml`)
 - [ ] Fase 2: lead novo no backend ou só e-mail/WhatsApp?
