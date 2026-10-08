@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 140" width="240" height="140" fill="none" role="img" aria-label="Carlesso">
+  <!-- Sem sublinha: a frase oficial ainda está pendente. Mesmo aviso de fonte do lockup horizontal. -->
+  <g transform="translate(80 0) scale(0.66667)" stroke="#374f6c" stroke-width="3.3" stroke-linecap="round" fill="none">
+    <circle cx="60" cy="32" r="26"/>
+    <circle cx="88" cy="60" r="26"/>
+    <circle cx="60" cy="88" r="26"/>
+    <circle cx="32" cy="60" r="26"/>
+  </g>
+  <text x="120" y="122" text-anchor="middle" font-family="Italiana, 'Cormorant Garamond', serif" font-size="34" letter-spacing="1.7" fill="#374f6c">CARLESSO</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" width="300" height="80" fill="none" role="img" aria-label="Carlesso">
+  <!-- Sem sublinha: a frase oficial ainda está pendente (ver docs/ANALISE-PROJETO.md, seção 15).
+       ATENÇÃO: o wordmark é texto (Italiana). Usado em <img>, o navegador não carrega a fonte e
+       cai para a serifa de reserva. Para fidelidade total, use o SVG inline numa página com a fonte
+       carregada ou converta o texto em contornos no editor de vetores. -->
+  <g transform="scale(0.66667)" stroke="#374f6c" stroke-width="3.3" stroke-linecap="round" fill="none">
+    <circle cx="60" cy="32" r="26"/>
+    <circle cx="88" cy="60" r="26"/>
+    <circle cx="60" cy="88" r="26"/>
+    <circle cx="32" cy="60" r="26"/>
+  </g>
+  <text x="96" y="52" font-family="Italiana, 'Cormorant Garamond', serif" font-size="34" letter-spacing="1.7" fill="#374f6c">CARLESSO</text>
+</svg>

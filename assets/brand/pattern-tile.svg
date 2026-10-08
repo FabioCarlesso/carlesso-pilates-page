@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <!-- Tile da padronagem. Repetir com background-repeat: repeat; background-size: 120px 120px.
+       No manual: esparsa 160px, normal 120px, densa 80px. Opacidade do manual: 0.06 a 0.12 (ajuste abaixo). -->
+  <g stroke="#374f6c" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.08">
+    <circle cx="60" cy="32" r="26"/>
+    <circle cx="88" cy="60" r="26"/>
+    <circle cx="60" cy="88" r="26"/>
+    <circle cx="32" cy="60" r="26"/>
+  </g>
+</svg>
