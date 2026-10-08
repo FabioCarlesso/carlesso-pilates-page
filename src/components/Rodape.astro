@@ -1,0 +1,107 @@
+---
+import Lockup from './Lockup.astro';
+import { enderecoEmLinhas, linkEmail, linkTelefone, linkWhatsApp, site } from '../config/site';
+---
+
+<footer class="rodape" data-tom="escuro">
+  <div class="container">
+    <div class="rodape__colunas">
+      <div class="rodape__marca">
+        <Lockup />
+        <p>{site.posicionamento}</p>
+      </div>
+
+      <div>
+        <h2 class="eyebrow">Endereço</h2>
+        <address class="rodape__lista">
+          {enderecoEmLinhas().map((linha) => <span>{linha}</span>)}
+        </address>
+      </div>
+
+      <div>
+        <h2 class="eyebrow">Contato</h2>
+        <ul class="rodape__lista rodape__links">
+          <li>
+            <a href={linkWhatsApp()} data-whatsapp="rodape" target="_blank" rel="noopener">
+              WhatsApp {site.telefone.exibicao}<span class="sr-only"> (abre em nova aba)</span>
+            </a>
+          </li>
+          <li><a href={linkTelefone}>Telefone {site.telefone.exibicao}</a></li>
+          <li><a href={linkEmail}>{site.email}</a></li>
+          <li><a href={site.redes.instagram}>Instagram</a></li>
+          <li><a href={site.redes.facebook}>Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rodape__base">
+      <span>© {new Date().getFullYear()} {site.nome} · {site.endereco.cidade}/{site.endereco.uf}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    padding: 64px var(--sp-page) 32px;
+    background-color: var(--tom-bg);
+    color: var(--tom-text-body);
+    font-size: var(--fs-text-sm);
+  }
+
+  .rodape__colunas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 48px 64px;
+  }
+
+  .rodape__colunas > div {
+    flex: 1 1 220px;
+    min-width: 0;
+  }
+
+  .rodape__marca p {
+    margin-top: 20px;
+    max-width: 22em;
+  }
+
+  .rodape__lista {
+    display: flex;
+    flex-direction: column;
+    margin: 14px 0 0;
+    padding: 0;
+    font-style: normal;
+    line-height: 1.7;
+    list-style: none;
+  }
+
+  .rodape__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+  }
+
+  .rodape__links a:hover {
+    color: var(--tom-text);
+    text-decoration: underline;
+  }
+
+  .rodape__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--tom-border);
+    font-size: var(--fs-label);
+    color: var(--tom-eyebrow);
+  }
+
+  /* Espaço para o botão flutuante não cobrir o fim da página. */
+  @media (max-width: 767px) {
+    .rodape {
+      padding-bottom: calc(32px + 72px + env(safe-area-inset-bottom));
+    }
+  }
+</style>

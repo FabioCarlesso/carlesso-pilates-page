@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Botao from '../components/Botao.astro';
+import Secao from '../components/Secao.astro';
+import { site } from '../config/site';
+---
+
+<Base titulo={`Página não encontrada — ${site.nome}`} semIndexacao>
+  <Secao rotulo="Página não encontrada" estreita>
+    <p class="eyebrow">Erro 404</p>
+    <h1 class="titulo-secao nao-encontrada__titulo">Esta página não existe.</h1>
+    <p class="nao-encontrada__texto">O endereço pode ter mudado. Volte ao início ou fale com a gente pelo WhatsApp.</p>
+    <div class="nao-encontrada__acoes">
+      <Botao href="/" variante="secundario" tamanho="lg">Voltar ao início</Botao>
+      <Botao whatsapp={{ posicao: '404' }} tamanho="lg">Agendar aula</Botao>
+    </div>
+  </Secao>
+</Base>
+
+<style>
+  .nao-encontrada__titulo {
+    margin-top: 14px;
+  }
+
+  .nao-encontrada__texto {
+    margin-top: 20px;
+    font-size: var(--fs-lead);
+    color: var(--tom-text-body);
+  }
+
+  .nao-encontrada__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 36px;
+  }
+</style>

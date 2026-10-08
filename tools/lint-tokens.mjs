@@ -2,7 +2,10 @@
  * Valida que todo `var(--token)` de `src/` aponta para uma custom property que
  * existe de fato.
  *
- * Motivação (issue #213): `var(--inexistente)` sem fallback torna a declaração
+ * Trazido do sistema (FabioCarlesso/carlessopilatesfe, scripts/lint-tokens.mjs)
+ * e adaptado ao site: vários arquivos de tokens globais e arquivos `.astro`.
+ *
+ * Motivação no sistema (issue #213): `var(--inexistente)` sem fallback torna a declaração
  * inválida no momento da computação (CSS Variables 1, §3.2) — a propriedade cai
  * para o valor herdado ou inicial. Não há erro de build, aviso de lint nem falha
  * de teste: quatro telas do prontuário renderizaram por meses com fundo
@@ -13,12 +16,10 @@
  * escapar do `[data-theme="dark"]` — foi exatamente o que escondeu os badges de
  * `/admin/usuarios` e os espaçamentos de `/perfil/alterar-senha`.
  *
- * Um nome é válido se estiver declarado em `src/styles/_tokens.scss` (os tokens
- * do Design System) ou em qualquer arquivo da **mesma pasta** de quem o usa. O
- * escopo é a pasta, e não o arquivo, porque um componente é uma pasta neste
- * projeto: `--serie-cor` é declarado no `.scss` do gráfico de evoluções e nada
- * impede que uma variável local seja declarada no `.scss` e consumida por um
- * `[style.--x]` no `.html` irmão.
+ * Um nome é válido se estiver declarado num dos `ARQUIVOS_TOKENS` (os tokens do
+ * Design System e os do site) ou em qualquer arquivo da **mesma pasta** de quem
+ * o usa — uma variável local declarada no `<style>` de um componente e
+ * consumida por outro componente da mesma pasta, por exemplo.
  *
  * Limites conhecidos: um `var()` montado por concatenação em tempo de execução
  * (`` `var(--${nome})` ``) não é analisável estaticamente e passa sem conferência.
@@ -30,8 +31,8 @@ import { fileURLToPath } from 'node:url';
 
 const RAIZ = fileURLToPath(new URL('..', import.meta.url));
 const DIR_FONTE = join(RAIZ, 'src');
-const ARQUIVO_TOKENS = join(DIR_FONTE, 'styles', '_tokens.scss');
-const EXTENSOES = ['.scss', '.css', '.html', '.ts'];
+const ARQUIVOS_TOKENS = ['tokens.css', 'tokens-site.css'].map(nome => join(DIR_FONTE, 'styles', nome));
+const EXTENSOES = ['.css', '.astro', '.ts', '.mdx'];
 
 /**
  * `var(--nome` com ou sem fallback. Aplicado ao arquivo inteiro, e não linha a
@@ -44,6 +45,9 @@ const USO = /var\(\s*(--[\w-]+)\s*([,)])/g;
  * `"` e `'` para reconhecer a primeira propriedade de um `style="--x: 4px"`.
  */
 const DECLARACAO = /(?:^|[;{"'])\s*(--[\w-]+)\s*:/gm;
+
+/** Apaga um trecho preservando as quebras de linha (e com elas os offsets). */
+const emBranco = trecho => trecho.replace(/[^\n]/g, ' ');
 
 /**
  * Troca comentários por espaços, preservando offsets e quebras de linha para os
@@ -59,11 +63,29 @@ const DECLARACAO = /(?:^|[;{"'])\s*(--[\w-]+)\s*:/gm;
  * strings ficam intactas: em `.ts` há uso legítimo de `var()` dentro delas. Em
  * HTML só existe `<!-- -->`, e ali não se rastreia string alguma: apóstrofo de
  * texto corrido (`aria-label`, conteúdo) engoliria o resto do arquivo.
+ *
+ * Um `.astro` mistura os dois: o frontmatter (entre os `---` iniciais) é
+ * TypeScript e vai pela varredura de código; o resto é template, tratado como
+ * HTML, mais os blocos `/* *\/` dos `<style>` removidos por regex, sem
+ * rastrear strings — pelo mesmo motivo do apóstrofo.
  */
 function semComentarios(conteudo, caminho) {
-  if (caminho.endsWith('.html')) {
-    return conteudo.replace(/<!--[\s\S]*?-->/g, trecho => trecho.replace(/[^\n]/g, ' '));
+  if (caminho.endsWith('.astro')) {
+    const frontmatter = /^---\r?\n[\s\S]*?\r?\n---/.exec(conteudo);
+    const fim = frontmatter ? frontmatter[0].length : 0;
+    return semComentariosDeCodigo(conteudo.slice(0, fim)) + semComentariosDeTemplate(conteudo.slice(fim));
   }
+  if (caminho.endsWith('.mdx')) {
+    return semComentariosDeTemplate(conteudo);
+  }
+  return semComentariosDeCodigo(conteudo);
+}
+
+function semComentariosDeTemplate(conteudo) {
+  return conteudo.replace(/<!--[\s\S]*?-->/g, emBranco).replace(/\/\*[\s\S]*?\*\//g, emBranco);
+}
+
+function semComentariosDeCodigo(conteudo) {
 
   // `split('')` e não `[...conteudo]`: o spread itera por *code point* e junta o
   // par surrogate de um emoji num só elemento, enquanto o laço abaixo indexa por
@@ -131,12 +153,14 @@ function nomesDeclarados(conteudo) {
 
 const linhaDo = (conteudo, offset) => conteudo.slice(0, offset).split('\n').length;
 
-const tokensGlobais = new Set(
-  nomesDeclarados(semComentarios(readFileSync(ARQUIVO_TOKENS, 'utf8'), ARQUIVO_TOKENS))
-);
-if (tokensGlobais.size === 0) {
-  console.error(`Nenhum token encontrado em ${relative(RAIZ, ARQUIVO_TOKENS)} — verificação abortada.`);
-  process.exit(1);
+const tokensGlobais = new Set();
+for (const arquivo of ARQUIVOS_TOKENS) {
+  const nomes = nomesDeclarados(semComentarios(readFileSync(arquivo, 'utf8'), arquivo));
+  if (nomes.length === 0) {
+    console.error(`Nenhum token encontrado em ${relative(RAIZ, arquivo)} — verificação abortada.`);
+    process.exit(1);
+  }
+  nomes.forEach(nome => tokensGlobais.add(nome));
 }
 
 // Uma passada só para limpar os comentários e juntar as declarações por pasta;
@@ -188,11 +212,11 @@ if (violacoes.length > 0) {
     console.error(`  ${arquivo}:${linha}  ${nome}  — ${efeito}`);
   }
   console.error(
-    '\nUse um token declarado em src/styles/_tokens.scss'
-    + ' (--bg-* para superfície, --sp-* para espaçamento, --r-* para raio)'
+    '\nUse um token declarado em src/styles/tokens.css ou tokens-site.css'
+    + ' (--bg-* e --tom-* para superfície, --sp-* para espaçamento, --r-* para raio)'
     + ' ou declare a variável na pasta do próprio componente.\n'
   );
   process.exit(1);
 }
 
-console.log(`✓ Todos os var(--token) de src/ apontam para tokens declarados (${tokensGlobais.size} tokens no Design System).`);
+console.log(`✓ Todos os var(--token) de src/ apontam para tokens declarados (${tokensGlobais.size} tokens no Design System e no site).`);

@@ -1,0 +1,36 @@
+---
+/**
+ * Símbolo oficial: quatro círculos em losango (SymbolFancy em
+ * reference/design-system/common.jsx). Herda a cor do texto (`currentColor`).
+ * Decorativo por padrão; passe `rotulo` quando estiver sozinho e significar algo.
+ */
+interface Props {
+  tamanho?: number;
+  traco?: number;
+  rotulo?: string;
+  class?: string;
+}
+
+// `...resto` repassa o atributo de escopo do CSS de quem usa o componente.
+const { tamanho = 44, traco = 2.4, rotulo, class: classe, ...resto } = Astro.props;
+---
+
+<svg
+  class={classe}
+  width={tamanho}
+  height={tamanho}
+  viewBox="0 0 120 120"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={traco}
+  stroke-linecap="round"
+  role={rotulo ? 'img' : undefined}
+  aria-label={rotulo}
+  aria-hidden={rotulo ? undefined : 'true'}
+  {...resto}
+>
+  <circle cx="60" cy="32" r="26"></circle>
+  <circle cx="88" cy="60" r="26"></circle>
+  <circle cx="60" cy="88" r="26"></circle>
+  <circle cx="32" cy="60" r="26"></circle>
+</svg>

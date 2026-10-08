@@ -1,0 +1,85 @@
+---
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/tokens-site.css';
+import '../styles/global.css';
+
+import Rodape from '../components/Rodape.astro';
+import Topo from '../components/Topo.astro';
+import WhatsAppFlutuante from '../components/WhatsAppFlutuante.astro';
+import { site } from '../config/site';
+
+interface Props {
+  /** Título completo da página (único por página). */
+  titulo: string;
+  /** ~150 caracteres. */
+  descricao?: string;
+  /** Caminho de imagem 1200×630 em public/. Pendente: a imagem padrão do site. */
+  imagemOg?: string;
+  /** Dados estruturados da página (JSON-LD). */
+  schema?: object;
+  semIndexacao?: boolean;
+}
+
+const { titulo, descricao = site.descricao, imagemOg, schema, semIndexacao = false } = Astro.props;
+const canonica = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonica} />
+    {semIndexacao && <meta name="robots" content="noindex" />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#f0ede8" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={site.nome} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonica} />
+    {imagemOg && <meta property="og:image" content={new URL(imagemOg, Astro.site)} />}
+
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+  </head>
+  <body>
+    <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+    <Topo />
+    <main id="conteudo" tabindex="-1">
+      <slot />
+    </main>
+    <Rodape />
+    <WhatsAppFlutuante />
+  </body>
+</html>
+
+<style>
+  .pular {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 20;
+    padding: 12px 18px;
+    background-color: var(--c-tempestade);
+    color: var(--c-cloud-dancer);
+    border-radius: var(--r-md);
+    transform: translateY(-200%);
+  }
+
+  .pular:focus {
+    --focus-ring: var(--c-azul-3);
+    transform: none;
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

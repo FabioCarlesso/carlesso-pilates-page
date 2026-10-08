@@ -1,0 +1,121 @@
+---
+/**
+ * Home — versão inicial da base técnica (F1). Usa só textos já existentes
+ * (docs/ANALISE-PROJETO.md, apêndice A). As demais seções da prévia entram
+ * no item 6 do backlog (docs/REVISAO-PLANEJAMENTO.md).
+ */
+import Base from '../layouts/Base.astro';
+import Botao from '../components/Botao.astro';
+import Citacao from '../components/Citacao.astro';
+import Secao from '../components/Secao.astro';
+import { site } from '../config/site';
+import { schemaEstudio } from '../lib/schema';
+---
+
+<Base titulo={`${site.nome} — Pilates Clássico em Foz do Iguaçu`} schema={schemaEstudio()}>
+  <Secao rotulo="Apresentação">
+    <div class="hero">
+      <p class="eyebrow">{site.posicionamento}</p>
+      <h1 class="hero__titulo">Mova-se e deixe a magia do método acontecer.</h1>
+      <p class="hero__lead">
+        Aulas presenciais para duetos e Vip class, conduzidas por fisioterapeutas, em Foz do Iguaçu.
+      </p>
+      <Botao whatsapp={{ posicao: 'hero' }} tamanho="lg" class="hero__cta">Agendar minha aula</Botao>
+    </div>
+  </Secao>
+
+  <Secao id="metodo" tom="escuro">
+    <div class="metodo">
+      <div class="metodo__citacao">
+        <h2 class="eyebrow">O método</h2>
+        <Citacao>
+          Pilates te desafia em todos os momentos. Seja no equilíbrio, na força, na mobilidade.
+        </Citacao>
+      </div>
+      <div class="metodo__texto">
+        <p>
+          Permita-se viver as transformações de dentro para fora. Não somente o corpo, mas sentir e viver a
+          sua verdade.
+        </p>
+        <p>Sinta-se livre para buscar o “seu jeito” dentro da Contrologia.</p>
+      </div>
+    </div>
+  </Secao>
+
+  <Secao rotulo="Agendamento" estreita class="fechamento">
+    <h2 class="fechamento__titulo">Venha praticar conosco.</h2>
+    <p class="fechamento__texto">
+      Fale com a gente pelo WhatsApp e escolha o melhor horário para a sua primeira aula.
+    </p>
+    <Botao whatsapp={{ posicao: 'fechamento' }} tamanho="lg">Agendar minha aula</Botao>
+  </Secao>
+</Base>
+
+<style>
+  .hero {
+    max-width: 52rem;
+  }
+
+  .hero__titulo {
+    margin-top: 20px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--fs-hero);
+    line-height: 1.02;
+  }
+
+  .hero__lead {
+    margin-top: 28px;
+    max-width: 30em;
+    font-size: var(--fs-lead);
+    color: var(--tom-text-body);
+  }
+
+  .hero :global(.hero__cta) {
+    margin-top: 36px;
+  }
+
+  .metodo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 56px;
+  }
+
+  .metodo__citacao {
+    flex: 1 1 420px;
+    min-width: 0;
+  }
+
+  .metodo__citacao :global(.citacao) {
+    margin-top: 28px;
+  }
+
+  .metodo__texto {
+    flex: 1 1 380px;
+    min-width: 0;
+    font-size: var(--fs-lead);
+    color: var(--tom-text-body);
+  }
+
+  .metodo__texto p + p {
+    margin-top: 20px;
+  }
+
+  :global(.fechamento) {
+    text-align: center;
+  }
+
+  .fechamento__titulo {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--fs-closing);
+    line-height: var(--lh-display);
+  }
+
+  .fechamento__texto {
+    margin: 20px 0 36px;
+    font-size: var(--fs-lead);
+    color: var(--tom-text-body);
+  }
+</style>

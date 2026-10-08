@@ -1,0 +1,47 @@
+---
+/**
+ * Citação com moldura [ ] feita de bordas, como o BracketFrame do manual
+ * (reference/design-system/common.jsx). Uso editorial; nunca em formulário.
+ */
+---
+
+<figure class="citacao">
+  <span class="citacao__colchete citacao__colchete--abre" aria-hidden="true"></span>
+  <blockquote class="citacao__texto"><slot /></blockquote>
+  <span class="citacao__colchete citacao__colchete--fecha" aria-hidden="true"></span>
+</figure>
+
+<style>
+  .citacao {
+    position: relative;
+    margin: 0;
+    padding: 28px clamp(32px, 6vw, 56px);
+  }
+
+  .citacao__colchete {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    border: 1.5px solid var(--tom-accent);
+  }
+
+  .citacao__colchete--abre {
+    left: 0;
+    border-right: none;
+  }
+
+  .citacao__colchete--fecha {
+    right: 0;
+    border-left: none;
+  }
+
+  .citacao__texto {
+    margin: 0;
+    font-family: var(--font-aux);
+    font-style: italic;
+    font-size: var(--fs-quote);
+    line-height: var(--lh-snug);
+    color: var(--tom-text);
+  }
+</style>

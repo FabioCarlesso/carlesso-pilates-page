@@ -1,0 +1,27 @@
+---
+/** CTA fixo no celular (docs/ANALISE-PROJETO.md, seção 11). */
+import Botao from './Botao.astro';
+---
+
+<div class="flutuante">
+  <Botao whatsapp={{ posicao: 'flutuante' }} tamanho="lg" class="flutuante__botao">Agendar aula</Botao>
+</div>
+
+<style>
+  .flutuante {
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 10;
+  }
+
+  .flutuante__botao {
+    box-shadow: var(--shadow-3);
+  }
+
+  @media (min-width: 768px) {
+    .flutuante {
+      display: none;
+    }
+  }
+</style>
