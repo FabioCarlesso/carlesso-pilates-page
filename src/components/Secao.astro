@@ -11,7 +11,8 @@ interface Props {
   class?: string;
 }
 
-const { id, tom = 'claro', estreita = false, rotulo, class: classe } = Astro.props;
+// `...resto` repassa o atributo de escopo do CSS de quem usa o componente.
+const { id, tom = 'claro', estreita = false, rotulo, class: classe, ...resto } = Astro.props;
 ---
 
 <section
@@ -19,6 +20,7 @@ const { id, tom = 'claro', estreita = false, rotulo, class: classe } = Astro.pro
   data-tom={tom === 'claro' ? undefined : tom}
   aria-label={rotulo}
   class:list={['secao', classe]}
+  {...resto}
 >
   <div class:list={['container', { 'container--narrow': estreita }]}>
     <slot />
