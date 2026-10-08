@@ -1,0 +1,89 @@
+---
+/**
+ * Botão-link. Com `whatsapp`, monta o link pela função de site.ts e marca a
+ * posição em `data-whatsapp` para o evento `click_whatsapp` do GA4.
+ */
+import { linkWhatsApp, type ContextoWhatsApp } from '../config/site';
+
+interface Props {
+  href?: string;
+  whatsapp?: { contexto?: ContextoWhatsApp; posicao: string };
+  variante?: 'primario' | 'secundario' | 'claro';
+  tamanho?: 'md' | 'lg';
+  class?: string;
+}
+
+const { href, whatsapp, variante = 'primario', tamanho = 'md', class: classe, ...resto } = Astro.props;
+const destino = whatsapp ? linkWhatsApp(whatsapp.contexto) : href;
+---
+
+<a
+  href={destino}
+  class:list={['botao', `botao--${variante}`, `botao--${tamanho}`, classe]}
+  data-whatsapp={whatsapp?.posicao}
+  target={whatsapp ? '_blank' : undefined}
+  rel={whatsapp ? 'noopener' : undefined}
+  {...resto}
+>
+  <slot />
+  {whatsapp && <span class="sr-only"> (abre o WhatsApp em nova aba)</span>}
+</a>
+
+<style>
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap-min);
+    padding: 0 22px;
+    border: 1px solid transparent;
+    border-radius: var(--r-md);
+    font-size: var(--fs-text-sm);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-align: center;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .botao--lg {
+    min-height: var(--btn-h-lg);
+    padding: 0 30px;
+  }
+
+  /* Rótulo em cor fixa: o fundo do primário não muda com o tom da seção. */
+  .botao--primario {
+    background-color: var(--c-horizonte);
+    color: var(--c-cloud-dancer);
+  }
+
+  .botao--primario:hover {
+    background-color: var(--c-tempestade);
+  }
+
+  .botao--secundario {
+    border-color: var(--border-strong);
+    color: var(--tom-text);
+  }
+
+  .botao--secundario:hover {
+    border-color: var(--c-horizonte);
+  }
+
+  /* Para as seções escuras e de marca. */
+  .botao--claro {
+    background-color: var(--c-cloud-dancer);
+    color: var(--c-tempestade);
+  }
+
+  .botao--claro:hover {
+    background-color: var(--c-cloud-dancer-3);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .botao {
+      transition: none;
+    }
+  }
+</style>

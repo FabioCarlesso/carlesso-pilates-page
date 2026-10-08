@@ -1,0 +1,61 @@
+---
+import Botao from './Botao.astro';
+import Lockup from './Lockup.astro';
+import { site } from '../config/site';
+---
+
+<header class="topo" data-tom="papel">
+  <div class="container topo__linha">
+    <a href="/" class="topo__marca" aria-label={`${site.nome} — início`}>
+      <Lockup />
+    </a>
+    {
+      site.navegacao.length > 0 && (
+        <nav aria-label="Principal" class="topo__nav">
+          {site.navegacao.map(({ rotulo, href }) => (
+            <a href={href}>{rotulo}</a>
+          ))}
+        </nav>
+      )
+    }
+    <Botao whatsapp={{ posicao: 'topo' }} class="topo__cta">Agendar aula</Botao>
+  </div>
+</header>
+
+<style>
+  .topo {
+    padding: 14px var(--sp-page);
+    background-color: var(--tom-bg);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .topo__linha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 32px;
+  }
+
+  .topo__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 28px;
+    font-size: var(--fs-text-sm);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--tom-text-body);
+  }
+
+  .topo__nav a {
+    display: inline-block;
+    padding: 12px 0;
+  }
+
+  /* No celular, o botão flutuante assume o CTA. */
+  @media (max-width: 767px) {
+    .topo__cta {
+      display: none;
+    }
+  }
+</style>

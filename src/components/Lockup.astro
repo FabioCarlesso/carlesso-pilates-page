@@ -1,0 +1,54 @@
+---
+/**
+ * Lockup horizontal: símbolo + CARLESSO + sublinha. Inline (e não <img>) para o
+ * wordmark usar a Italiana carregada na página (docs/design-system.md).
+ * As cores vêm do tom da seção onde está.
+ */
+import Simbolo from './Simbolo.astro';
+import { site } from '../config/site';
+---
+
+<span class="lockup">
+  <Simbolo class="lockup__simbolo" />
+  <span class="lockup__texto">
+    <span class="lockup__wordmark">Carlesso</span>
+    <span class="lockup__sublinha">{site.sublinha}</span>
+  </span>
+</span>
+
+<style>
+  .lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .lockup__simbolo {
+    flex-shrink: 0;
+    color: var(--tom-simbolo);
+  }
+
+  .lockup__texto {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lockup__wordmark {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1;
+    letter-spacing: var(--ls-wordmark);
+    text-transform: uppercase;
+    color: var(--tom-marca);
+  }
+
+  .lockup__sublinha {
+    margin-top: 5px;
+    font-size: var(--fs-label);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--tom-eyebrow);
+  }
+</style>

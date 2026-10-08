@@ -1,6 +1,10 @@
 # Revisão do planejamento — o que ajustar antes de começar a construção
 
 > Revisão de `docs/ANALISE-PROJETO.md` e do kit (`assets/`, `reference/`). Data: 08/10/2026.
+> **Atualização (08/10/2026):** decididos Astro, Cloudflare Pages e GA4 com consentimento (registro em
+> `docs/context.md`). Os itens 2 a 5 do backlog (seção 7) estão feitos; os caminhos `assets/…` citados abaixo
+> foram reorganizados (ver `docs/README.md`).
+>
 > Mesma convenção da análise: **[fato]** foi conferido nos arquivos do kit; **[recomendação]** é opinião, para discutir;
 > **[verificar]** é algo que precisa ser confirmado fora daqui antes de virar decisão.
 
@@ -236,15 +240,15 @@ Entregar em alta resolução (o build gera AVIF/WebP e os tamanhos).
 
 ## 7. Backlog revisado (ordem sugerida para começar)
 
-1. Escolher hospedagem e confirmar acesso ao domínio (Registro.br/DNS)
-2. Criar projeto Astro com `tokens.css` (sem `@import`), `tokens-site.css` e fontes auto-hospedadas
-3. `src/config/site.ts` + `linkWhatsApp()` + geração do JSON-LD
-4. Adaptar `lint-tokens` (seção 4.10) e criar CI (lint de tokens, `astro check`, build)
-5. Componentes base: `Layout` (topo, rodapé, WhatsApp flutuante, pular para conteúdo), `Section` (claro/escuro/marca), `Button`, `Card`, `Citacao` (bordas `[ ]`)
+1. ~~Escolher hospedagem~~ ✓ (Cloudflare Pages) e confirmar acesso ao domínio (Registro.br/DNS)
+2. ~~Criar projeto Astro com `tokens.css` (sem `@import`), `tokens-site.css` e fontes auto-hospedadas~~ ✓
+3. ~~`src/config/site.ts` + `linkWhatsApp()` + geração do JSON-LD~~ ✓
+4. ~~Adaptar `lint-tokens` (seção 4.10) e criar CI (lint de tokens, `astro check`, build)~~ ✓
+5. ~~Componentes base: `Layout` (topo, rodapé, WhatsApp flutuante, pular para conteúdo), `Section` (claro/escuro/marca), `Button`, `Citacao` (bordas `[ ]`)~~ ✓ — `Card` entra com a Home
 6. Home (MVP) a partir da prévia, com as correções da seção 4.4 e blocos que se escondem sem conteúdo
-7. `/privacidade` e 404
-8. SEO técnico: títulos, canonical, sitemap, `robots.txt`, OG, favicons PNG
-9. Analytics sem cookies + evento de clique no WhatsApp por posição
+7. `/privacidade` (a 404 já existe) — publicar junto com o GA4
+8. SEO técnico: imagem Open Graph 1200×630 e títulos das novas páginas (canonical, sitemap, `robots.txt`, JSON-LD e favicons PNG já existem)
+9. GA4 com aviso de consentimento + evento `click_whatsapp` por posição (requisitos em `docs/context.md`, D6)
 10. Lighthouse CI com as metas
 11. Go-live: plano de DNS, redirecionamentos e, no sistema, a landing de `/` e o `robots.txt`
 12. Páginas `/aulas`, `/pilates-classico`, `/profissionais` (conforme conteúdo)
@@ -258,6 +262,6 @@ Itens da análise que continuam valendo sem mudança: 1 (posicionamento), 14 e 1
 
 Só três decisões precisam estar fechadas para começar F1; o resto pode seguir em paralelo:
 
-- [ ] **Stack**: Astro (recomendado na análise e mantido aqui)
-- [ ] **Hospedagem**: Vercel Pro, Cloudflare Pages ou Netlify (seção 4.6)
-- [ ] **Analytics**: sem cookies na v1 ou GA4 com consentimento (seção 4.5) — afeta o layout (banner ou não)
+- [x] **Stack**: Astro
+- [x] **Hospedagem**: Cloudflare Pages
+- [x] **Analytics**: GA4 com aviso de consentimento

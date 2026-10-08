@@ -1,0 +1,145 @@
+/*
+ * Tokens do Carlesso Design System — bloco :root.
+ *
+ * Origem: assets/tokens.css de FabioCarlesso/carlessopilatesfe (cópia fiel em
+ * reference/design-system/tokens.css, clonada em 08/10/2026). Só o :root foi
+ * trazido: densidade, tema escuro, componentes e app shell são do sistema.
+ * O @import do Google Fonts foi removido — as fontes são auto-hospedadas
+ * (src/styles/fonts.css).
+ *
+ * Não edite valores aqui. Se um token mudar no sistema, copie de novo o :root.
+ * Tokens só do site ficam em tokens-site.css.
+ */
+
+:root {
+  /* === COLORS — Carlesso Manual === */
+  /* Cores Base (fundo / respiro) */
+  --c-cloud-dancer: #f0ede8;
+  --c-cloud-dancer-2: #f6f4f0;
+  --c-cloud-dancer-3: #faf8f5;
+
+  /* Cores de Corpo (identidade / presença) */
+  --c-azul: #708da3;
+  --c-azul-2: #8aa4b8;
+  --c-azul-3: #a8bcca;
+  --c-azul-soft: #c3d0d9;
+
+  /* Cores de Transição (equilíbrio) */
+  --c-noite-inverno: #355978;
+
+  /* Assinatura — cor oficial do logotipo */
+  --c-horizonte: #374f6c;
+
+  /* Contraste */
+  --c-tempestade: #141f2d;
+
+  /* Neutros derivados */
+  --c-grafite: #455157;
+  --c-bruma: #8a96a0;
+  --c-linha: #d8d3cb;
+  --c-linha-suave: #e6e1d8;
+  --c-branco: #ffffff;
+
+  /* Funcionais — derivados harmônicos do azul */
+  --c-success: #5a7a5e;
+  --c-success-bg: #e6ede4;
+  --c-warning: #b08842;
+  --c-warning-bg: #f3ead8;
+  --c-danger: #8c3a3a;
+  --c-danger-bg: #f0dcdc;
+  --c-info: #355978;
+  --c-info-bg: #dde5ed;
+
+  /* === SUPERFÍCIES (papel) === */
+  --bg-app: var(--c-cloud-dancer);
+  --bg-paper: var(--c-cloud-dancer-3);
+  --bg-elev: #ffffff;
+  --bg-sunken: var(--c-cloud-dancer-2);
+  --bg-headline: var(--c-tempestade);
+
+  /* === TEXTO === */
+  --text-primary: var(--c-tempestade);
+  --text-secondary: var(--c-grafite);
+  --text-muted: var(--c-bruma);
+  --text-on-dark: var(--c-cloud-dancer);
+  --text-brand: var(--c-horizonte);
+
+  /* === BORDAS === */
+  --border-subtle: rgba(20, 31, 45, 0.08);
+  --border-default: rgba(20, 31, 45, 0.14);
+  --border-strong: rgba(20, 31, 45, 0.28);
+  --border-brand: var(--c-horizonte);
+
+  /* Seta dos selects. Token porque a cor mora dentro do data URI e `url()` não
+     aceita `var()`: o tema escuro troca o token inteiro (issue #200). */
+  --select-chevron: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%23455157' fill='none' stroke-width='1.5'/></svg>");
+
+  /* === TIPOGRAFIA === */
+  /* Display — substituto de Dream Avenue (Didone alta classe). 
+     Em produção: trocar por @font-face Dream Avenue */
+  --font-display: 'Italiana', 'Cormorant Garamond', serif;
+  /* Apoio (UI) — Montserrat conforme manual */
+  --font-body: 'Montserrat', 'Helvetica Neue', system-ui, sans-serif;
+  /* Auxiliar — caps espaçadas, citações */
+  --font-aux: 'Cormorant Garamond', 'Italiana', serif;
+
+  --fs-display-xl: 96px;
+  --fs-display-lg: 64px;
+  --fs-display-md: 44px;
+  --fs-display-sm: 32px;
+  --fs-h1: 28px;
+  --fs-h2: 22px;
+  --fs-h3: 18px;
+  --fs-body: 14px;
+  --fs-body-sm: 13px;
+  --fs-caption: 12px;
+  --fs-micro: 11px;
+
+  --lh-tight: 1.05;
+  --lh-snug: 1.2;
+  --lh-normal: 1.45;
+  --lh-loose: 1.65;
+
+  --ls-display: 0;
+  --ls-caps: 0.18em;
+  --ls-caps-tight: 0.08em;
+
+  /* === ESPAÇAMENTO === */
+  --sp-0: 0;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+  --sp-8: 40px;
+  --sp-9: 56px;
+  --sp-10: 72px;
+  --sp-11: 96px;
+  --sp-12: 128px;
+
+  /* === RAIOS === */
+  --r-none: 0;
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-lg: 8px;
+  --r-pill: 999px;
+
+  /* === SOMBRAS — discretas, "vazio estratégico" === */
+  --shadow-1: 0 1px 0 rgba(20, 31, 45, 0.04), 0 1px 2px rgba(20, 31, 45, 0.04);
+  --shadow-2: 0 1px 2px rgba(20, 31, 45, 0.05), 0 4px 12px rgba(20, 31, 45, 0.06);
+  --shadow-3: 0 8px 32px rgba(20, 31, 45, 0.10), 0 2px 8px rgba(20, 31, 45, 0.06);
+  --shadow-focus: 0 0 0 3px rgba(55, 79, 108, 0.18);
+
+  /* Sombra nas bordas do contêiner de tabela que sinaliza colunas fora do
+     viewport. Mais densa que a --shadow-1 para se destacar sobre as linhas. */
+  --table-scroll-shadow: rgba(20, 31, 45, 0.16);
+
+  /* === DENSIDADE (default = comfortable) === */
+  --row-h: 52px;
+  --input-h: 40px;
+  --btn-h: 40px;
+  --btn-h-sm: 32px;
+  --gutter: 24px;
+}

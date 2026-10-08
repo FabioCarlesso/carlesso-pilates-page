@@ -1,0 +1,81 @@
+/*
+ * Tokens só do site público. Complementam tokens.css (design system) sem
+ * redefinir nenhum token de lá. Os valores vêm da prévia de referência
+ * (reference/home-preview/home-preview.html).
+ *
+ * A escala do sistema (--fs-body 14px, --fs-display-xl 96px fixos) é para
+ * interface densa; o site usa a escala fluida abaixo.
+ */
+
+:root {
+  /* === TIPOGRAFIA (escala fluida) === */
+  --fs-hero: clamp(46px, 6.2vw, 88px);
+  --fs-section: clamp(36px, 4.4vw, 56px);
+  --fs-section-sm: clamp(34px, 4vw, 52px);
+  --fs-closing: clamp(40px, 5.4vw, 72px);
+  --fs-quote: clamp(26px, 3vw, 36px);
+  --fs-card-title: 32px;
+  --fs-lead: 17px;
+  --fs-text: 16px;
+  --fs-text-sm: 15px;
+  /* Piso de leitura: nenhum texto do site abaixo de 12px. */
+  --fs-label: 12px;
+
+  --lh-text: 1.65;
+  --lh-display: 1.05;
+  --ls-wordmark: 0.05em;
+
+  /* === LAYOUT === */
+  --container-max: 1200px;
+  --container-narrow: 820px;
+  --sp-page: clamp(16px, 4vw, 24px);
+  --sp-section: clamp(64px, 8vw, 112px);
+
+  /* === ALVOS DE TOQUE === */
+  --tap-min: 44px;
+  --btn-h-lg: 52px;
+
+  /* === TOM DA SEÇÃO ===
+     Cores que dependem do fundo da seção. O padrão vale para os fundos claros;
+     [data-tom] redefine para as seções escuras. Contrastes (WCAG 2.x) em
+     docs/design-system.md. */
+  --tom-bg: var(--bg-app);
+  --tom-text: var(--text-primary);
+  --tom-text-body: var(--text-secondary);
+  --tom-eyebrow: var(--text-secondary);
+  --tom-accent: var(--c-noite-inverno);
+  --tom-border: var(--border-subtle);
+  /* Wordmark e símbolo do lockup. */
+  --tom-marca: var(--c-horizonte);
+  --tom-simbolo: var(--c-horizonte);
+  /* Anel de foco sólido. O --shadow-focus do sistema rende 1,31:1 e não serve. */
+  --focus-ring: var(--c-noite-inverno);
+}
+
+[data-tom="papel"] {
+  --tom-bg: var(--bg-paper);
+}
+
+[data-tom="escuro"] {
+  --tom-marca: var(--c-cloud-dancer);
+  --tom-simbolo: var(--c-azul-soft);
+  --tom-bg: var(--c-tempestade);
+  --tom-text: var(--c-cloud-dancer);
+  --tom-text-body: var(--c-linha-suave);
+  --tom-eyebrow: var(--c-azul-3);
+  --tom-accent: var(--c-azul-3);
+  --tom-border: rgba(240, 237, 232, 0.13);
+  --focus-ring: var(--c-cloud-dancer);
+}
+
+[data-tom="marca"] {
+  --tom-marca: var(--c-cloud-dancer);
+  --tom-simbolo: var(--c-azul-soft);
+  --tom-bg: var(--c-horizonte);
+  --tom-text: var(--c-cloud-dancer);
+  --tom-text-body: var(--c-linha-suave);
+  --tom-eyebrow: var(--c-azul-soft);
+  --tom-accent: var(--c-azul-soft);
+  --tom-border: rgba(240, 237, 232, 0.13);
+  --focus-ring: var(--c-azul-3);
+}

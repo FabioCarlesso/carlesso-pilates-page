@@ -1,0 +1,10 @@
+/*
+ * Fontes auto-hospedadas (@fontsource), só o subconjunto latino — cobre o
+ * português. Italiana é a substituta declarada da Dream Avenue (licença web
+ * pendente, docs/context.md).
+ */
+@import '@fontsource/italiana/latin-400.css';
+@import '@fontsource/montserrat/latin-400.css';
+@import '@fontsource/montserrat/latin-500.css';
+@import '@fontsource/montserrat/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-400-italic.css';

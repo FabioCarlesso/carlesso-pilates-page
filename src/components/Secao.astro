@@ -1,0 +1,38 @@
+---
+/**
+ * Faixa de seção. O `tom` define o fundo e as cores dependentes dele
+ * (texto, eyebrow, anel de foco) via [data-tom] em tokens-site.css.
+ */
+interface Props {
+  id?: string;
+  tom?: 'claro' | 'papel' | 'escuro' | 'marca';
+  estreita?: boolean;
+  rotulo?: string;
+  class?: string;
+}
+
+const { id, tom = 'claro', estreita = false, rotulo, class: classe } = Astro.props;
+---
+
+<section
+  id={id}
+  data-tom={tom === 'claro' ? undefined : tom}
+  aria-label={rotulo}
+  class:list={['secao', classe]}
+>
+  <div class:list={['container', { 'container--narrow': estreita }]}>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .secao {
+    padding: var(--sp-section) var(--sp-page);
+    background-color: var(--tom-bg);
+    color: var(--tom-text);
+  }
+
+  .secao[data-tom='papel'] {
+    border-block: 1px solid var(--border-subtle);
+  }
+</style>

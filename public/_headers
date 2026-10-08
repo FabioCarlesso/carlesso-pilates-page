@@ -1,0 +1,18 @@
+# Cabeçalhos do Cloudflare Pages (docs/deploy.md).
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+# Os endereços *.pages.dev (produção e previews) não devem ser indexados:
+# só o domínio oficial aparece no Google.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

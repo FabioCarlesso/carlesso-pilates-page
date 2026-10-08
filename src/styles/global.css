@@ -1,0 +1,90 @@
+/* Base do site. Tokens em tokens.css (design system) e tokens-site.css. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-text);
+  line-height: var(--lh-text);
+  color: var(--text-primary);
+  background-color: var(--bg-app);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.eyebrow {
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--tom-eyebrow);
+}
+
+.titulo-secao {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-section);
+  line-height: 1.08;
+  color: var(--tom-text);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
