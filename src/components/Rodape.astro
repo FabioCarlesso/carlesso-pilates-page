@@ -36,6 +36,11 @@ import { enderecoEmLinhas, linkEmail, linkTelefone, linkWhatsApp, site } from '.
 
     <div class="rodape__base">
       <span>© {new Date().getFullYear()} {site.nome} · {site.endereco.cidade}/{site.endereco.uf}</span>
+      <ul class="rodape__legal">
+        <li><a href="/privacidade">Política de privacidade</a></li>
+        {/* Só aparece com o GA4 ativo: Consentimento.astro remove o `hidden`. */}
+        <li><button type="button" data-consentimento-abrir hidden>Preferências de cookies</button></li>
+      </ul>
     </div>
   </div>
 </footer>
@@ -88,6 +93,7 @@ import { enderecoEmLinhas, linkEmail, linkTelefone, linkWhatsApp, site } from '.
 
   .rodape__base {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 8px 24px;
@@ -96,6 +102,38 @@ import { enderecoEmLinhas, linkEmail, linkTelefone, linkWhatsApp, site } from '.
     border-top: 1px solid var(--tom-border);
     font-size: var(--fs-label);
     color: var(--tom-eyebrow);
+  }
+
+  .rodape__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rodape__legal a,
+  .rodape__legal button {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .rodape__legal button[hidden] {
+    display: none;
+  }
+
+  .rodape__legal a:hover,
+  .rodape__legal button:hover {
+    color: var(--tom-text);
+    text-decoration: underline;
   }
 
   /* Espaço para o botão flutuante não cobrir o fim da página. */

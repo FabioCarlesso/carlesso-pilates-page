@@ -26,11 +26,21 @@ Configuração em `docs/deploy.md`.
 GA4 com evento `click_whatsapp` por posição. Nenhum script do Google carrega antes do consentimento.
 Os botões de WhatsApp já marcam a posição em `data-whatsapp` (topo, hero, aulas, profissionais, fechamento, flutuante,
 rodape, 404).
-Implementação: item 9 do backlog (`REVISAO-PLANEJAMENTO.md`, seção 7). Ao implementar:
-- banner com "Aceitar" e "Recusar" de mesmo peso visual, sem caixa pré-marcada;
-- escolha guardada no navegador e revogável por link no rodapé;
-- política de privacidade (`/privacidade`) publicada junto, citando GA4 e a finalidade;
-- o banner não pode cobrir o botão flutuante de WhatsApp no celular.
+Implementado em 09/10/2026 (`src/components/Consentimento.astro`, `src/pages/privacidade.astro`):
+- banner com "Aceitar" e "Recusar" de mesmo peso visual, sem caixa pré-marcada; no celular fica acima do botão
+  flutuante de WhatsApp;
+- escolha no `localStorage` (`carlesso:consentimento-analytics`), revogável por "Preferências de cookies" no rodapé;
+  ao recusar depois de aceitar, o envio para e os cookies `_ga*` são apagados;
+- o `gtag.js` só é pedido depois do "Aceitar"; consentimento de anúncios negado e Google Signals desligado;
+- evento `click_whatsapp` com o parâmetro `posicao` (valor de `data-whatsapp`);
+- ID em `PUBLIC_GA4_ID`, definido só na produção do Cloudflare Pages: sem ele (dev e previews) não há banner nem
+  GA4, e o preview não suja os dados (`src/config/analytics.ts`, `docs/deploy.md`);
+- política de privacidade em `/privacidade`, citando GA4, a finalidade, os cookies e os direitos da LGPD. O texto
+  afirma retenção de 14 meses e sinais de anúncios desligados: a propriedade do GA4 precisa estar configurada assim.
+
+A Content-Security-Policy (`public/_headers`) só libera o Google Tag Manager e o Google Analytics. Para ela não
+precisar de `'unsafe-inline'`, o `astro.config.mjs` manda scripts e CSS sempre para arquivos
+(`assetsInlineLimit: 0`, `inlineStylesheets: 'never'`).
 
 ### Fonte única de dados (08/10/2026)
 
@@ -72,4 +82,5 @@ cabe (zero JS, como pede a seção 13 da análise). O botão "Agendar aula" do t
   `crefito` da equipe já aparece quando preenchido) e como comprovar o "1º Studio de Pilates Clássico"
 - [ ] Valores e frequências dos pacotes (`src/content/planos.yml`)
 - [ ] Fotos (hero, estúdio, equipe), texto sobre a Contrologia e resposta "preciso ter experiência?" (`faq.yml`)
+- [ ] Revisão do texto de `/privacidade` pela Claudia (e CNPJ do estúdio, se ela quiser que apareça)
 - [ ] Fase 2: lead novo no backend ou só e-mail/WhatsApp?

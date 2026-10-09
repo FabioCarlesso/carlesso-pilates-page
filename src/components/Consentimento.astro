@@ -1,0 +1,228 @@
+---
+/**
+ * Aviso de cookies e carga do GA4 (docs/context.md, D6). Nenhum script do
+ * Google é pedido antes do "Aceitar". A escolha fica no localStorage e pode ser
+ * revista pelo botão `[data-consentimento-abrir]` do rodapé.
+ *
+ * Com o GA4 carregado, cada clique em `a[data-whatsapp]` envia o evento
+ * `click_whatsapp` com o parâmetro `posicao`.
+ *
+ * Sem `PUBLIC_GA4_ID` (dev e previews) o componente não renderiza nada.
+ */
+import { ga4Id } from '../config/analytics';
+---
+
+{
+  ga4Id && (
+    <div
+      class="consentimento"
+      data-tom="escuro"
+      data-consentimento
+      data-ga4={ga4Id}
+      role="region"
+      aria-label="Aviso de cookies"
+      hidden
+    >
+      <p class="consentimento__texto">
+        Usamos cookies do Google Analytics para saber quantas pessoas visitam o site e quais seções levam ao
+        WhatsApp. Só ativamos se você aceitar. <a href="/privacidade">Política de privacidade</a>
+      </p>
+      <div class="consentimento__acoes">
+        <button type="button" class="consentimento__botao" data-escolha="recusado">Recusar</button>
+        <button type="button" class="consentimento__botao" data-escolha="aceito">Aceitar</button>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  type Escolha = 'aceito' | 'recusado';
+
+  const CHAVE = 'carlesso:consentimento-analytics';
+  const banner = document.querySelector<HTMLElement>('[data-consentimento]');
+  const id = banner?.dataset.ga4;
+
+  const janela = window as unknown as {
+    dataLayer: unknown[];
+    gtag: (...args: unknown[]) => void;
+    [desligar: `ga-disable-${string}`]: boolean;
+  };
+
+  function lerEscolha(): Escolha | undefined {
+    try {
+      const valor = localStorage.getItem(CHAVE);
+      return valor === 'aceito' || valor === 'recusado' ? valor : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  function gravarEscolha(escolha: Escolha) {
+    try {
+      localStorage.setItem(CHAVE, escolha);
+    } catch {
+      // Sem armazenamento (navegação privada, bloqueio): a escolha vale só nesta página.
+    }
+  }
+
+  let carregado = false;
+
+  function carregarGa4(id: string) {
+    janela[`ga-disable-${id}`] = false;
+    if (carregado) return;
+    carregado = true;
+
+    janela.dataLayer = janela.dataLayer || [];
+    janela.gtag = function gtag() {
+      // gtag.js exige o objeto `arguments`, não um array.
+      janela.dataLayer.push(arguments);
+    };
+    // Só medição: nada de anúncios nem personalização.
+    janela.gtag('consent', 'default', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    janela.gtag('js', new Date());
+    janela.gtag('config', id, { allow_google_signals: false, allow_ad_personalization_signals: false });
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+    document.head.append(script);
+  }
+
+  /** Recusa depois de ter aceitado: para o envio e apaga os cookies `_ga*`. */
+  function desligarGa4(id: string) {
+    janela[`ga-disable-${id}`] = true;
+    if (janela.gtag) janela.gtag('consent', 'update', { analytics_storage: 'denied' });
+
+    const partes = location.hostname.split('.');
+    const dominios = partes.map((_, i) => partes.slice(i).join('.')).filter((d) => d.includes('.'));
+    for (const cookie of document.cookie.split(';')) {
+      const nome = cookie.split('=')[0].trim();
+      if (!nome.startsWith('_ga')) continue;
+      const expirar = `${nome}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+      document.cookie = expirar;
+      for (const dominio of dominios) document.cookie = `${expirar}; domain=.${dominio}`;
+    }
+  }
+
+  function aplicar(escolha: Escolha, id: string) {
+    if (escolha === 'aceito') carregarGa4(id);
+    else if (carregado) desligarGa4(id);
+  }
+
+  function abrir() {
+    if (!banner) return;
+    banner.hidden = false;
+    banner.querySelector<HTMLButtonElement>('[data-escolha]')?.focus();
+  }
+
+  if (banner && id) {
+    const escolha = lerEscolha();
+    if (escolha) aplicar(escolha, id);
+    else banner.hidden = false;
+
+    banner.addEventListener('click', (evento) => {
+      const botao = (evento.target as Element).closest<HTMLButtonElement>('[data-escolha]');
+      if (!botao) return;
+      const nova = botao.dataset.escolha as Escolha;
+      gravarEscolha(nova);
+      aplicar(nova, id);
+      banner.hidden = true;
+    });
+
+    for (const botao of document.querySelectorAll<HTMLButtonElement>('[data-consentimento-abrir]')) {
+      botao.hidden = false;
+      botao.addEventListener('click', abrir);
+    }
+
+    // Captura: o link abre o WhatsApp em nova aba e a página continua aberta para o envio.
+    document.addEventListener(
+      'click',
+      (evento) => {
+        const link = (evento.target as Element).closest<HTMLAnchorElement>('a[data-whatsapp]');
+        if (!link || !carregado || janela[`ga-disable-${id}`]) return;
+        janela.gtag('event', 'click_whatsapp', { posicao: link.dataset.whatsapp, transport_type: 'beacon' });
+      },
+      { capture: true }
+    );
+  }
+</script>
+
+<style>
+  .consentimento {
+    position: fixed;
+    inset-inline: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 15;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 24px;
+    max-width: 720px;
+    margin-inline: auto;
+    padding: 20px 24px;
+    background-color: var(--tom-bg);
+    color: var(--tom-text-body);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-3);
+    font-size: var(--fs-text-sm);
+  }
+
+  .consentimento[hidden] {
+    display: none;
+  }
+
+  .consentimento__texto {
+    flex: 1 1 320px;
+  }
+
+  .consentimento__texto a {
+    color: var(--tom-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .consentimento__acoes {
+    display: flex;
+    gap: 12px;
+  }
+
+  /* Mesmo peso visual para as duas escolhas. */
+  .consentimento__botao {
+    min-width: 112px;
+    min-height: var(--tap-min);
+    padding: 0 22px;
+    border: 1px solid var(--tom-text);
+    border-radius: var(--r-md);
+    background-color: transparent;
+    color: var(--tom-text);
+    font: inherit;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+  }
+
+  .consentimento__botao:hover {
+    background-color: var(--tom-border);
+  }
+
+  /* No celular, acima do botão flutuante de WhatsApp (52px + 16px de folga). */
+  @media (max-width: 767px) {
+    .consentimento {
+      bottom: calc(16px + var(--btn-h-lg) + 12px + env(safe-area-inset-bottom));
+      padding: 16px;
+    }
+
+    .consentimento__acoes {
+      flex: 1 1 100%;
+    }
+
+    .consentimento__botao {
+      flex: 1;
+    }
+  }
+</style>
