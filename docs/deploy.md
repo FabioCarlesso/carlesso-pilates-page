@@ -29,25 +29,30 @@ até a troca de domínio.
 ## Google Analytics 4 (uma vez)
 
 1. Criar a propriedade GA4 e um fluxo de dados Web para `https://carlessopilates.com.br`; copiar o ID `G-…`.
-2. No Cloudflare Pages, em **Settings → Variables and Secrets**, criar `PUBLIC_GA4_ID` só em **Production** e
-   refazer o deploy (o valor entra no HTML no build).
-3. Deixar a propriedade como a política de privacidade diz (`src/pages/privacidade.astro`):
+2. Deixar a propriedade como a política de privacidade diz (`src/pages/privacidade.astro`):
    - **Admin → Data collection**: Google Signals desligado;
    - **Admin → Data retention**: 14 meses.
-4. **Admin → Custom definitions**: criar a dimensão personalizada de evento `posicao` (para ver o
-   `click_whatsapp` por posição nos relatórios) e marcar `click_whatsapp` como evento-chave.
-5. Conferir no **DebugView** / Tempo real: aceitar o aviso, clicar num botão de WhatsApp.
+3. **Admin → Custom definitions**: criar a dimensão personalizada de evento `posicao` (para ver o
+   `click_whatsapp` por posição nos relatórios). O `click_whatsapp` só pode ser marcado como evento-chave depois
+   do primeiro envio.
+4. Só então, no Cloudflare Pages, em **Settings → Variables and Secrets**, criar `PUBLIC_GA4_ID` só em
+   **Production** e refazer o deploy (o valor entra no HTML no build). Nessa ordem, a política nunca afirma uma
+   configuração que ainda não existe.
+5. Conferir no **DebugView** / Tempo real: aceitar o aviso, clicar num botão de WhatsApp. Com o evento
+   recebido, marcar `click_whatsapp` como evento-chave (**Admin → Events**).
 
 ## Domínio (go-live, F3)
 
 Pré-requisito: acesso ao Registro.br (titular de `carlessopilates.com.br`) e saber onde está o DNS hoje.
 
-1. Reduzir o TTL dos registros atuais alguns dias antes.
-2. Conferir registros de e-mail (MX, SPF, DKIM) para não perdê-los na troca.
-3. Em **Custom domains** do projeto Pages, adicionar `carlessopilates.com.br` e `www.carlessopilates.com.br`;
+1. GA4 ativo antes da troca (seção acima, na ordem: configurar a propriedade e só depois definir `PUBLIC_GA4_ID`).
+   Sem ele, a `/privacidade` descreve um aviso de cookies e um GA4 que não existem, e a medição não começa no dia 1.
+2. Reduzir o TTL dos registros atuais alguns dias antes.
+3. Conferir registros de e-mail (MX, SPF, DKIM) para não perdê-los na troca.
+4. Em **Custom domains** do projeto Pages, adicionar `carlessopilates.com.br` e `www.carlessopilates.com.br`;
    redirecionar `www` para o domínio raiz (301).
-4. Validar o site novo no domínio antes de desligar o construtor antigo.
-5. No Search Console, enviar o sitemap e conferir as URLs antigas (redirecionar o que estiver indexado para `/`).
+5. Validar o site novo no domínio antes de desligar o construtor antigo.
+6. No Search Console, enviar o sitemap e conferir as URLs antigas (redirecionar o que estiver indexado para `/`).
 
 `site.url` (`src/config/site.ts`) define a URL canônica e o sitemap — já aponta para o domínio oficial.
 
