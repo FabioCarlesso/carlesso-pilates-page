@@ -1,0 +1,136 @@
+---
+/**
+ * Política de privacidade e cookies (docs/context.md, D6). Ao mudar o que o
+ * site coleta, atualize este texto e `atualizadaEm`.
+ */
+import Base from '../layouts/Base.astro';
+import Secao from '../components/Secao.astro';
+import { enderecoCompleto, linkEmail, site } from '../config/site';
+
+const atualizadaEm = new Date('2026-10-09T12:00:00-03:00');
+const dataExibicao = atualizadaEm.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  titulo={`Política de privacidade — ${site.nome}`}
+  descricao={`Como o site da ${site.nome} trata seus dados: Google Analytics só com consentimento, contato pelo WhatsApp e seus direitos pela LGPD.`}
+>
+  <Secao estreita rotulo="Política de privacidade">
+    <p class="eyebrow">Privacidade</p>
+    <h1 class="titulo-secao">Política de privacidade</h1>
+    <p class="politica__data">Atualizada em <time datetime={atualizadaEm.toISOString().slice(0, 10)}>{dataExibicao}</time>.</p>
+
+    <div class="politica">
+      <p>
+        Esta política explica quais dados o site <strong>{new URL(site.url).hostname}</strong> trata, para quê e como você
+        pode exercer seus direitos previstos na Lei Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).
+      </p>
+
+      <h2>Quem é responsável</h2>
+      <p>
+        {site.nome}, {enderecoCompleto()}. Para qualquer assunto sobre seus dados, escreva para
+        <a href={linkEmail}>{site.email}</a>.
+      </p>
+
+      <h2>O que o site não coleta</h2>
+      <p>
+        O site não tem formulário, cadastro nem área de login, e não pede nenhuma informação de saúde. As fontes são
+        servidas pelo próprio site e o mapa é só um link para o Google Maps: nada de terceiros é carregado sem a sua
+        escolha.
+      </p>
+
+      <h2>Google Analytics (somente com seu consentimento)</h2>
+      <p>
+        Se você clicar em <strong>Aceitar</strong> no aviso de cookies, usamos o Google Analytics 4, do Google, para
+        medir as visitas: páginas vistas, tempo na página, tipo de aparelho, cidade aproximada e qual botão de WhatsApp
+        foi clicado. A finalidade é só entender o uso do site e melhorá-lo. Não usamos esses dados para anúncios nem
+        para identificar você.
+      </p>
+      <p>
+        Para isso o Google grava os cookies <code>_ga</code> e <code>_ga_&lt;id&gt;</code> no seu navegador, válidos
+        por até 2 anos. Os sinais do Google para anúncios e personalização ficam desligados, e os dados ficam
+        guardados no Google Analytics por 14 meses. O Google pode processar os dados fora do Brasil; veja a
+        <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" rel="noopener"
+          >política de privacidade do Google<span class="sr-only"> (abre em nova aba)</span></a
+        >.
+      </p>
+      <p>
+        Se você clicar em <strong>Recusar</strong>, nenhum script do Google é carregado. A base legal do tratamento é o
+        seu consentimento (art. 7º, I, da LGPD).
+      </p>
+
+      <h2>Sua escolha sobre cookies</h2>
+      <p>
+        Guardamos a sua resposta ao aviso no armazenamento do seu navegador, para não perguntar de novo a cada página.
+        Você pode mudar de ideia quando quiser pelo link <strong>Preferências de cookies</strong>, no rodapé: ao recusar,
+        a medição para e os cookies do Google Analytics são apagados. Limpar os dados do site no navegador também
+        desfaz a escolha.
+      </p>
+
+      <h2>Contato pelo WhatsApp</h2>
+      <p>
+        Os botões de agendamento abrem o WhatsApp com uma mensagem pronta. A conversa acontece no WhatsApp, sob a
+        política de privacidade dele, e os dados que você enviar (nome, telefone e o que escrever) são usados só para
+        responder e agendar sua aula.
+      </p>
+
+      <h2>Hospedagem</h2>
+      <p>
+        O site é hospedado pela Cloudflare, que recebe dados técnicos de cada acesso, como endereço IP e navegador,
+        para entregar as páginas e proteger o site contra abusos.
+      </p>
+
+      <h2>Seus direitos</h2>
+      <p>
+        Você pode pedir a confirmação de que tratamos seus dados, o acesso, a correção ou a eliminação deles, e revogar
+        o consentimento a qualquer momento, escrevendo para <a href={linkEmail}>{site.email}</a>. Também pode reclamar à
+        Autoridade Nacional de Proteção de Dados (ANPD).
+      </p>
+    </div>
+  </Secao>
+</Base>
+
+<style>
+  .politica__data {
+    margin-top: 16px;
+    font-size: var(--fs-text-sm);
+    color: var(--tom-text-body);
+  }
+
+  .politica {
+    max-width: 68ch;
+    margin-top: 40px;
+    color: var(--tom-text-body);
+  }
+
+  .politica p + p {
+    margin-top: 16px;
+  }
+
+  .politica h2 {
+    margin-top: 40px;
+    margin-bottom: 12px;
+    font-family: var(--font-display);
+    font-size: var(--fs-quote);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--tom-text);
+  }
+
+  .politica strong {
+    font-weight: 600;
+    color: var(--tom-text);
+  }
+
+  .politica a {
+    color: var(--tom-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .politica code {
+    font-family: inherit;
+    font-weight: 500;
+    color: var(--tom-text);
+  }
+</style>

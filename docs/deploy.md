@@ -12,6 +12,7 @@ No painel da Cloudflare: **Workers & Pages → Create → Pages → Connect to G
 | Build command | `npm run build` |
 | Build output directory | `dist` |
 | Node | lido de `.node-version` (22); se o build reclamar, definir a variável `NODE_VERSION=22` |
+| Variável `PUBLIC_GA4_ID` | ID de medição do GA4 (`G-…`), **só no ambiente Production**. Sem ela não há banner nem GA4 |
 
 Cada PR ganha uma URL de preview (`<hash>.<projeto>.pages.dev`). Produção fica em `<projeto>.pages.dev`
 até a troca de domínio.
@@ -20,9 +21,22 @@ até a troca de domínio.
 
 - `public/_headers` — cabeçalhos de segurança, cache longo para `/_astro/*` (arquivos com hash) e
   `X-Robots-Tag: noindex` em todo `*.pages.dev`, para só o domínio oficial ser indexado.
-  Quando o GA4 entrar, acrescentar uma Content-Security-Policy que libere só os domínios do Google necessários.
+  A Content-Security-Policy libera só o Google Tag Manager e o Google Analytics, sem código inline; ao incluir
+  qualquer outro serviço de terceiros, acrescentar o domínio dele ali.
 - `public/robots.txt` — libera tudo e aponta o `sitemap-index.xml` (gerado no build por `@astrojs/sitemap`).
 - `dist/404.html` — servido automaticamente para rotas inexistentes.
+
+## Google Analytics 4 (uma vez)
+
+1. Criar a propriedade GA4 e um fluxo de dados Web para `https://carlessopilates.com.br`; copiar o ID `G-…`.
+2. No Cloudflare Pages, em **Settings → Variables and Secrets**, criar `PUBLIC_GA4_ID` só em **Production** e
+   refazer o deploy (o valor entra no HTML no build).
+3. Deixar a propriedade como a política de privacidade diz (`src/pages/privacidade.astro`):
+   - **Admin → Data collection**: Google Signals desligado;
+   - **Admin → Data retention**: 14 meses.
+4. **Admin → Custom definitions**: criar a dimensão personalizada de evento `posicao` (para ver o
+   `click_whatsapp` por posição nos relatórios) e marcar `click_whatsapp` como evento-chave.
+5. Conferir no **DebugView** / Tempo real: aceitar o aviso, clicar num botão de WhatsApp.
 
 ## Domínio (go-live, F3)
 

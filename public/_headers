@@ -1,10 +1,13 @@
 # Cabeçalhos do Cloudflare Pages (docs/deploy.md).
+# A CSP só libera o Google Tag Manager e o Google Analytics (GA4 após consentimento).
+# Nada inline: astro.config.mjs manda scripts e CSS sempre para arquivos.
 
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
 # Os endereços *.pages.dev (produção e previews) não devem ser indexados:
 # só o domínio oficial aparece no Google.
